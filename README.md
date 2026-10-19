@@ -2,6 +2,20 @@
 
 为 macOS 版 iTerm2 3.6.11 提供可安装、可恢复的简体中文本地化方案。
 
+<p align="center">
+  <a href="https://github.com/zhanjianbirui/iTerm2-ChineseTranslate-tool/raw/refs/heads/main/release/v1.0.0/iTerm2-ChineseTranslate-tool-v1.0.0.zip">
+    <img src="https://img.shields.io/badge/%E2%AC%87_%E4%B8%8B%E8%BD%BD_v1.0.0-2ea44f?style=for-the-badge&logo=github&logoColor=white" alt="一键下载 iTerm2 简体中文汉化工具">
+  </a>
+</p>
+
+<p align="center">
+  <a href="DOWNLOAD.md">下载说明</a> ·
+  <a href="release/v1.0.0/RELEASE_NOTES.md">发布说明</a> ·
+  <a href="release/v1.0.0/SHA256SUMS.txt">SHA-256 校验</a>
+</p>
+
+---
+
 [**下载最新发布包**](release/v1.0.0/iTerm2-ChineseTranslate-tool-v1.0.0.zip) ·
 [查看发布说明](release/v1.0.0/RELEASE_NOTES.md)
 
@@ -54,8 +68,7 @@ iTerm2 功能强大，但官方界面目前只有英文。本项目通过替换�
 
 ### 1. 下载发布包
 
-从 [GitHub Releases](https://github.com/zhanjianbirui/iTerm2-ChineseTranslate-tool/releases) 或
-[本地发布目录](release/v1.0.0/) 下载：
+点击页面顶部的“一键下载”按钮，或从 [下载说明](DOWNLOAD.md) 获取：
 
 ```text
 iTerm2-ChineseTranslate-tool-v1.0.0.zip
