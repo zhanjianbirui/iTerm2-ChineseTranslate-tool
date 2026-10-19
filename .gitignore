@@ -1,0 +1,12 @@
+.DS_Store
+.local/
+outputs/
+work/
+build/
+dist/
+*.app/
+*.tar.gz
+*.log
+*.tmp
+__pycache__/
+*.py[cod]

@@ -2,6 +2,9 @@
 
 为 macOS 版 iTerm2 3.6.11 提供可安装、可恢复的简体中文本地化方案。
 
+[**下载最新发布包**](release/v1.0.0/iTerm2-ChineseTranslate-tool-v1.0.0.zip) ·
+[查看发布说明](release/v1.0.0/RELEASE_NOTES.md)
+
 ![Platform](https://img.shields.io/badge/platform-macOS-black)
 ![iTerm2](https://img.shields.io/badge/iTerm2-3.6.11-blue)
 ![Language](https://img.shields.io/badge/language-Simplified%20Chinese-red)
@@ -49,26 +52,33 @@ iTerm2 功能强大，但官方界面目前只有英文。本项目通过替换�
 
 ## 快速开始
 
-### 1. 下载工具
+### 1. 下载发布包
 
-下载并解压 [iTerm2 汉化工具](outputs/Iterm2-汉化工具-3.6.11.zip)。
-
-解压后的目录结构：
+从 [GitHub Releases](https://github.com/zhanjianbirui/iTerm2-ChineseTranslate-tool/releases) 或
+[本地发布目录](release/v1.0.0/) 下载：
 
 ```text
-iTerm2-Localization-Manager/
+iTerm2-ChineseTranslate-tool-v1.0.0.zip
+```
+
+### 2. 解压并退出 iTerm2
+
+解压后得到：
+
+```text
+iTerm2-ChineseTranslate-tool-v1.0.0/
 ├── iTerm2-汉化管理.command
 ├── assets/
+├── README.md
+├── RELEASE_NOTES.md
 └── 使用说明.md
 ```
 
-### 2. 退出 iTerm2
-
 在 iTerm2 中按 `⌘Q` 完全退出应用。
 
-### 3. 运行管理工具
+### 3. 启动汉化工具
 
-双击 `iTerm2-汉化管理.command`，在菜单中选择：
+双击 `iTerm2-汉化管理.command`，选择：
 
 ```text
 1. 安装汉化
@@ -103,28 +113,11 @@ chmod +x iTerm2-汉化管理.command
 ./iTerm2-汉化管理.command remove
 ```
 
-当 iTerm2 不在默认位置时，可以指定应用路径：
+当 iTerm2 不在默认位置时：
 
 ```bash
 ITERM_APP_PATH="/Applications/iTerm2.app" ./iTerm2-汉化管理.command
 ```
-
-## 工作流程
-
-```text
-检测应用版本
-  ↓
-备份 /Applications/iTerm.app
-  ↓
-写入中文 NIB、字符串表和语言配置
-  ↓
-重新签名并校验
-  ↓
-启动中文版 iTerm2
-```
-
-执行“删除汉化”时，脚本会恢复备份中的原始 NIB、字符串表和
-`Info.plist`，删除新增的中文资源，并重新签名。
 
 ## 常见问题
 
@@ -146,25 +139,29 @@ ITERM_APP_PATH="/Applications/iTerm2.app" ./iTerm2-汉化管理.command
 在 Finder 中右键应用，选择“打开”。汉化版本使用 Ad-hoc 签名，
 不等同于原作者发布的官方签名版本。
 
-## 目录结构
+## 项目结构
 
 ```text
-├── outputs/  可直接使用的汉化工具和说明
-└── work/     翻译词表、构建脚本、界面资源与中间产物
+├── release/   按版本归档的发布包、说明和校验值
+├── tool/      可直接运行的管理脚本与汉化资源
+├── source/    翻译词表和本地化构建脚本
+├── scripts/   发布等维护脚本
+└── .local/    本地构建缓存，不进入 Git
 ```
 
-主要文件：
+主要入口：
 
-- [汉化管理脚本](work/iTerm2-Localization-Manager/iTerm2-汉化管理.command)
-- [简体中文翻译词表](work/ui_zh.tsv)
-- [界面翻译脚本](work/apply_ui_translation.py)
-- [字符串表生成脚本](work/build_localized_strings.py)
+- [汉化管理工具](tool/iTerm2-汉化管理.command)
+- [简体中文翻译词表](source/translation/ui_zh.tsv)
+- [界面翻译脚本](source/scripts/apply_ui_translation.py)
+- [字符串表生成脚本](source/scripts/build_localized_strings.py)
+- [发布构建脚本](scripts/build-release.command)
 
 ## 安全说明
 
 - 执行安装或恢复前必须完全退出 iTerm2。
 - 不要删除原应用备份，否则无法安全恢复。
-- ZIP 中的脚本仅修改 `/Applications/iTerm.app` 和独立备份目录。
+- 汉化脚本仅修改 `/Applications/iTerm.app` 和独立备份目录。
 - 建议在执行前确认应用版本为 3.6.11。
 
 ## 关于项目

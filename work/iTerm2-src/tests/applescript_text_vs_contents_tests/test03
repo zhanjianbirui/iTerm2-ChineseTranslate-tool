@@ -1,4 +1,0 @@
-tell application "iTerm2"
-        contents of (current session of current window)
-end tell
-

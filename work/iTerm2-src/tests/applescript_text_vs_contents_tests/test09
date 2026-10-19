@@ -1,5 +1,0 @@
-tell application "iTerm2"
-        set mySession to (current session of current window)
-        contents of mySession
-end tell
-
