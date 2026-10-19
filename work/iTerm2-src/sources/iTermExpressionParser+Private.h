@@ -1,0 +1,28 @@
+//
+//  iTermExpressionParser+Private.h
+//  iTerm2SharedARC
+//
+//  Created by George Nachman on 3/1/19.
+//
+
+#import "iTermExpressionParser.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface iTermFunctionArgument : NSObject
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) iTermParsedExpression *expression;
+@property (nonatomic) BOOL passByReference;
+@end
+
+@class CPSLRParser;
+
+@interface iTermExpressionParser ()
+
++ (CPTokeniser *)newTokenizer;
++ (id<CPTokenRecogniser>)stringRecognizerWithClass:(Class)theClass;
++ (void)setEscapeReplacerInStringRecognizer:(id)stringRecogniser;
+
+@end
+
+NS_ASSUME_NONNULL_END

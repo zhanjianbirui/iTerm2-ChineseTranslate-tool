@@ -1,0 +1,10 @@
+framework module SearchableComboListView {
+  umbrella header "SearchableComboListView.h"
+  export *
+
+  module * { export * }
+}
+
+module SearchableComboListView.Swift {
+  header "SearchableComboListView-Swift.h"
+}

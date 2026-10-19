@@ -1,0 +1,44 @@
+//
+//  iTermHTTPConnection.h
+//  iTerm2
+//
+//  Created by George Nachman on 11/4/16.
+//
+//
+
+#import <Foundation/Foundation.h>
+
+@class iTermSocketAddress;
+
+@interface iTermHTTPConnection : NSObject
+
+@property (nonatomic, readonly) dispatch_queue_t queue;
+@property (nonatomic, readonly) iTermSocketAddress *clientAddress;
+@property (nonatomic, readonly) NSNumber *euid;
+@property (nonatomic, readonly) dispatch_io_t ioStream;
+
+- (instancetype)initWithFileDescriptor:(int)fd
+                         clientAddress:(iTermSocketAddress *)address
+                                  euid:(NSNumber *)euid;
+
+// All methods methods should only be called on self.queue:
+- (NSURLRequest *)readRequest;
+- (BOOL)sendResponseWithCode:(int)code reason:(NSString *)reason headers:(NSDictionary *)headers;
+- (void)badRequest;
+- (void)unauthorized;
+- (void)unacceptable;  // library version too old
+- (void)closeConnection;
+
+// read a chunk of bytes. blocks.
+- (NSMutableData *)readSynchronously;
+
+// For testing
+- (NSData *)nextByte;
+
+- (void)writeAsynchronously:(dispatch_data_t)data
+                      queue:(dispatch_queue_t)queue
+                 completion:(void (^)(bool done,
+                                      dispatch_data_t _Nullable data,
+                                      int error))completion;
+
+@end

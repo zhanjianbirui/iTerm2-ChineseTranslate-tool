@@ -1,0 +1,533 @@
+#import "CPKColorWell.h"
+#import "CPKControlsView.h"
+#import "CPKLogging.h"
+#import "CPKPopover.h"
+#import "NSObject+CPK.h"
+
+// Returns YES if the color has a valid colorSpace that can be queried.
+// Pattern colors and some catalog colors throw an exception when accessing colorSpace.
+static BOOL CPKColorHasValidColorSpace(NSColor *color) {
+    if (!color) {
+        return YES;  // nil colors are handled elsewhere
+    }
+    @try {
+        (void)[color colorSpace];
+        return YES;
+    } @catch (NSException *exception) {
+        return NO;
+    }
+}
+
+@protocol CPKColorWellViewDelegate
+@property(nonatomic, readonly) void (^willOpenPopover)(void);
+@property(nonatomic, readonly) void (^willClosePopover)(void);
+@property(nonatomic) NSColorSpace *colorSpace;
+
+- (NSRect)presentationRect;
+- (NSView *)presentingView;
+- (BOOL)isContinuous;
+- (void)colorChangedByDrag:(NSColor *)color;
+@end
+
+/** This really should be an NSCell. It provides the implementation of the CPKColorWell. */
+@interface CPKColorWellView : CPKSwatchView
+
+/** Block invoked when the user changes the color. Only called for continuous controls. */
+@property(nonatomic, copy) void (^colorDidChange)(NSColor *);
+
+/** User can adjust alpha value. */
+@property(nonatomic, assign) BOOL alphaAllowed;
+
+/** Use can choose to have no color. */
+@property(nonatomic, assign) BOOL noColorAllowed;
+
+/** Color well is disabled? */
+@property(nonatomic, assign) BOOL disabled;
+
+@property(nonatomic, weak) id<CPKColorWellViewDelegate> delegate;
+
+@property (nonatomic, strong) NSColorSpace *colorSpace;
+
+// This is how the well sets color on drag-drop
+- (void)pushColor:(NSColor *)color;
+
+@end
+
+@interface CPKColorWellView() <NSDraggingDestination, NSDraggingSource, NSPopoverDelegate>
+@property(nonatomic) BOOL open;
+@property(nonatomic) CPKPopover *popover;
+@property(nonatomic, copy) void (^willClosePopover)(NSColor *);
+@property(nonatomic, weak) NSView *savedPresentingView;
+@property(nonatomic) NSRect savedPresentationRect;
+
+// The most recently selected color from the picker. Differs from self.color if
+// the control is not continuous (self.color is the swatch color).
+@property(nonatomic) NSColor *selectedColor;
+@end
+
+@interface CPKColorWell() <CPKColorWellViewDelegate>
+@end
+
+@interface NSColorPanel (Private)
+- (id)__target;
+@end
+
+
+@implementation CPKColorWellView {
+    NSPoint _mouseDownLocation;
+    BOOL _haveSetColorPanelTarget;
+}
+
+- (instancetype)initWithFrame:(NSRect)frameRect {
+    self = [super initWithFrame:frameRect];
+    if (self) {
+        [self colorWellViewCommonInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self colorWellViewCommonInit];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    NSColorPanel *panel = [NSColorPanel sharedColorPanel];
+    if (_haveSetColorPanelTarget) {
+        // NSColorPanel holds an unsafe unretained reference to its target.
+        // See https://bugs.chromium.org/p/chromium/issues/detail?id=767598
+        // (╯°□°)╯︵ ┻━┻
+        BOOL respondsToPrivateTargetMethod =
+        [panel respondsToSelector:@selector(__target)];
+        if (respondsToPrivateTargetMethod &&
+            [panel __target] == self) {
+            panel.target = nil;
+            panel.action = nil;
+        }
+    }
+}
+
+- (void)colorWellViewCommonInit {
+    [self registerForDraggedTypes:@[ NSPasteboardTypeColor ]];
+}
+
+- (void)awakeFromNib {
+    self.cpk_cornerRadius = 3;
+    self.open = NO;
+}
+
+// Use mouseDown so this will work in a NSTableView.
+- (void)mouseDown:(NSEvent *)theEvent {
+    _mouseDownLocation = [self convertPoint:theEvent.locationInWindow fromView:nil];
+    if (!self.delegate.isContinuous && theEvent.clickCount == 1) {
+        [self openPopOver];
+    }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+    if (self.delegate.isContinuous && theEvent.clickCount == 1) {
+        [self openPopOver];
+    }
+}
+
+- (void)openPopOver {
+    if (!_disabled && !self.open) {
+        [self openPopOverRelativeToRect:_delegate.presentationRect
+                                 ofView:_delegate.presentingView];
+    }
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent {
+    NSPoint location = [self convertPoint:theEvent.locationInWindow fromView:nil];
+    CGFloat distance = sqrt(pow(_mouseDownLocation.x - location.x, 2) +
+                            pow(_mouseDownLocation.y - location.y, 2));
+    const CGFloat kDragThreshold = 5;  // Minimum drag distance before initiating a drag.
+    if (distance < kDragThreshold) {
+        return;
+    }
+    NSColor *color = self.selectedColor ?: [NSColor clearColor];
+    NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:color];
+    dragItem.draggingFrame = self.frame;
+    NSSize size = self.frame.size;
+    if (size.width == 0 || size.height == 0) {
+        return;
+    }
+    dragItem.imageComponentsProvider = ^NSArray<NSDraggingImageComponent *> *(void) {
+        NSDraggingImageComponent *imageComponent =
+            [NSDraggingImageComponent draggingImageComponentWithKey:NSDraggingImageComponentIconKey];
+
+        NSImage *snapshot = [[NSImage alloc] initWithSize:size];
+        [snapshot lockFocus];
+        [self drawRect:self.bounds];
+        [snapshot unlockFocus];
+
+        imageComponent.contents = snapshot;
+        imageComponent.frame = self.bounds;
+
+        return @[ imageComponent ];
+    };
+    [self beginDraggingSessionWithItems:@[ dragItem ]
+                                  event:theEvent
+                                 source:self];
+}
+
+- (void)pushColor:(NSColor *)color {
+    CPKLog(@"pushColor:%@", color);
+    if (self.popover) {
+        self.popover.selectedColor = color;
+    } else {
+        NSColorPanel *panel = [NSColorPanel sharedColorPanel];
+        if (panel.isVisible) {
+            [panel setColor:color];
+        }
+    }
+}
+
+
+#pragma mark - NSDraggingDestination
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
+    __block NSDragOperation operation = NSDragOperationNone;
+    [sender enumerateDraggingItemsWithOptions:0
+                                      forView:self
+                                      classes:@[ [NSColor class] ]
+                                searchOptions:@{}
+                                   usingBlock:^(NSDraggingItem * _Nonnull draggingItem, NSInteger idx, BOOL * _Nonnull stop) {
+                                       NSColor *color = draggingItem.item;
+                                       if (color) {
+                                           operation = NSDragOperationGeneric;
+                                           *stop = YES;
+                                       }
+                                   }];
+    return operation;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
+    __block BOOL ok = NO;
+    [sender enumerateDraggingItemsWithOptions:0
+                                      forView:self
+                                      classes:@[ [NSColor class] ]
+                                searchOptions:@{}
+                                   usingBlock:^(NSDraggingItem * _Nonnull draggingItem, NSInteger idx, BOOL * _Nonnull stop) {
+        NSColor *color = draggingItem.item;
+        CPKLog(@"performDragOperation color=%@", color);
+        if (color && CPKColorHasValidColorSpace(color)) {
+            self.popover.selectedColor = color;
+            self.selectedColor = color;
+            [self.delegate colorChangedByDrag:color];
+
+            ok = YES;
+            *stop = YES;
+        }
+    }];
+    return ok;
+}
+
+
+#pragma mark - NSDraggingSource
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    return NSDragOperationGeneric;
+}
+
+- (void)colorPanelColorDidChange:(id)sender {
+    NSColor *color = [sender color];
+    if (!CPKColorHasValidColorSpace(color)) {
+        return;
+    }
+    [self.delegate colorChangedByDrag:color];
+}
+
+- (void)noColorChosenInSystemColorPicker:(id)sender {
+    [self colorPanelColorDidChange:nil];
+}
+
+- (void)useColorPicker:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCPKUseSystemColorPicker];
+    [[NSColorPanel sharedColorPanel] close];
+    [[NSColorPanel sharedColorPanel] setAccessoryView:nil];
+    if (self.savedPresentingView.window) {
+        [self openPopOverRelativeToRect:self.savedPresentationRect ofView:self.savedPresentingView];
+    }
+}
+
+- (void)showSystemColorPicker {
+    static const CGFloat kMarginBetweenAccessoryViews = 4;
+
+    NSColorPanel *colorPanel = [NSColorPanel sharedColorPanel];
+
+    // Add an accessory view to use ColorPicker.
+    NSView *container = [[NSView alloc] init];
+
+    NSImage *image = [self cpk_imageNamed:@"ActiveEscapeHatch"];
+    NSRect frame;
+    const CGFloat kBottomMargin = 8;
+    frame.origin = NSMakePoint(0, kBottomMargin);
+    frame.size = image.size;
+    NSButton *button = [[NSButton alloc] initWithFrame:frame];
+    button.bordered = NO;
+    button.image = image;
+    button.title = @"Default Picker";
+    button.imagePosition = NSImageAbove;
+    [button sizeToFit];
+    frame = button.frame;
+    [button setTarget:self];
+    [button setAction:@selector(useColorPicker:)];
+
+    [container addSubview:button];
+
+    if (self.noColorAllowed) {
+        frame.origin.x = NSMaxX(frame) + kMarginBetweenAccessoryViews;
+        button = [[NSButton alloc] initWithFrame:frame];
+        image = [self cpk_imageNamed:@"NoColor"];
+        button.bordered = NO;
+        button.image = image;
+        button.imagePosition = NSImageAbove;
+        button.title = @"No Color";
+        [button sizeToFit];
+        [button setTarget:self];
+        [button setAction:@selector(noColorChosenInSystemColorPicker:)];
+        [container addSubview:button];
+    }
+
+    container.frame = NSMakeRect(0, 0, NSMaxX(button.frame), NSMaxY(button.frame) + kBottomMargin);
+    colorPanel.accessoryView = container;
+
+    [colorPanel setTarget:self];
+    _haveSetColorPanelTarget = YES;
+    [colorPanel setAction:@selector(colorPanelColorDidChange:)];
+    [colorPanel orderFront:nil];
+    colorPanel.showsAlpha = self.alphaAllowed;
+    if (self.selectedColor) {
+        colorPanel.color = self.selectedColor;
+    }
+}
+
+- (void)openPopOverRelativeToRect:(NSRect)presentationRect ofView:(NSView *)presentingView {
+    self.savedPresentationRect = presentationRect;
+    self.savedPresentingView = presentingView;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCPKUseSystemColorPicker]) {
+        [self showSystemColorPicker];
+        return;
+    }
+    __weak __typeof(self) weakSelf = self;
+    self.selectedColor = self.color;
+    CPKMainViewControllerOptions options = 0;
+    if (self.alphaAllowed) {
+        options |= CPKMainViewControllerOptionsAlpha;
+    }
+    if (self.noColorAllowed) {
+        options |= CPKMainViewControllerOptionsNoColor;
+    }
+    NSAssert(self.colorSpace != nil, @"CPKColorWellView colorSpace must not be nil when opening popover");
+    self.popover =
+        [CPKPopover presentRelativeToRect:presentationRect
+                                   ofView:presentingView
+                            preferredEdge:NSRectEdgeMaxY
+                             initialColor:self.color
+                               colorSpace:self.colorSpace
+                                  options:options
+                       selectionDidChange:^(NSColor *color) {
+                           weakSelf.selectedColor = color;
+                           if (weakSelf.delegate.isContinuous) {
+                               weakSelf.color = color;
+                               if (weakSelf.colorDidChange) {
+                                   weakSelf.colorDidChange(color);
+                               }
+                           }
+                           [weakSelf setNeedsDisplay:YES];
+                       }
+                     useSystemColorPicker:^() {
+                         [weakSelf.popover close];
+                         [self showSystemColorPicker];
+                     }];
+    self.popover.colorSpaceDidChange = ^(NSColorSpace *newColorSpace) {
+        weakSelf.colorSpace = newColorSpace;
+    };
+    self.open = YES;
+    self.popover.willClose = ^() {
+        if (weakSelf.willClosePopover) {
+            weakSelf.willClosePopover(weakSelf.color);
+        }
+        weakSelf.color = weakSelf.selectedColor;
+        // Update color space - the view's colorSpace should already be up to date from the popover
+        weakSelf.delegate.colorSpace = weakSelf.colorSpace;
+        weakSelf.open = NO;
+        weakSelf.popover = nil;
+    };
+    if (weakSelf.delegate.willOpenPopover) {
+        weakSelf.delegate.willOpenPopover();
+    }
+}
+
+- (void)setOpen:(BOOL)open {
+    _open = open;
+    [self updateBorderColor];
+}
+
+- (void)updateBorderColor {
+    if (self.disabled) {
+        self.borderColor = [NSColor grayColor];
+    } else if (self.open) {
+        self.borderColor = [NSColor lightGrayColor];
+    } else {
+        self.borderColor = [NSColor darkGrayColor];
+    }
+    [self setNeedsDisplay:YES];
+}
+
+- (void)setDisabled:(BOOL)disabled {
+    _disabled = disabled;
+    [self updateBorderColor];
+    if (disabled && self.popover) {
+        [self.popover performClose:self];
+    }
+}
+
+@end
+
+static NSColorSpace *gDefaultColorSpace;
+
+@implementation CPKColorWell {
+  CPKColorWellView *_view;
+  BOOL _continuous;
+}
+
++ (NSColorSpace *)defaultColorSpace {
+    return gDefaultColorSpace ?: [NSColorSpace sRGBColorSpace];
+}
+
++ (void)setDefaultColorSpace:(NSColorSpace *)defaultColorSpace {
+    gDefaultColorSpace = defaultColorSpace;
+}
+
+// This is the path taken when created programatically.
+- (instancetype)initWithFrame:(NSRect)frameRect colorSpace:(NSColorSpace *)colorSpace {
+    self = [super initWithFrame:frameRect];
+    if (self) {
+        _colorSpace = colorSpace;
+        [self load];
+    }
+    return self;
+}
+
+// This is called before applicationWillFinishLaunching  so the color space is wrong :(
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        _colorSpace = [CPKColorWell defaultColorSpace] ?: [NSColorSpace sRGBColorSpace];
+    }
+    return self;
+}
+
+// This is the path taken when loaded from a nib.
+- (void)awakeFromNib {
+  [self load];
+}
+
+- (void)load {
+    if (_view) {
+        return;
+    }
+
+    // This makes target/action work on older OS versions.
+    [self setCell:[[NSActionCell alloc] init]];
+    _continuous = YES;
+    _view = [[CPKColorWellView alloc] initWithFrame:self.bounds];
+    _view.colorSpace = self.colorSpace;
+    _view.delegate = self;
+    [self addSubview:_view];
+    _view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    self.autoresizesSubviews = YES;
+    _view.alphaAllowed = _alphaAllowed;
+    _view.noColorAllowed = _noColorAllowed;
+    __weak __typeof(self) weakSelf = self;
+    _view.colorDidChange = ^(NSColor *color) {
+        [weakSelf sendAction:weakSelf.action to:weakSelf.target];
+    };
+    _view.willClosePopover = ^(NSColor *color) {
+        if (!weakSelf.continuous) {
+            [weakSelf sendAction:weakSelf.action to:weakSelf.target];
+        }
+        if (weakSelf.willClosePopover) {
+            weakSelf.willClosePopover();
+        }
+    };
+}
+
+- (void)setColorSpace:(NSColorSpace *)colorSpace {
+    if ([_colorSpace isEqual:colorSpace]) {
+        return;
+    }
+    _colorSpace = colorSpace;
+    [self load];
+    _view.colorSpace = colorSpace;
+    if (_view.popover && !_view.popover.closing) {
+        _view.popover.colorSpace = colorSpace;
+    }
+}
+
+- (NSColor *)color {
+  return self.view.selectedColor;
+}
+
+- (void)setColor:(NSColor *)color {
+    CPKLog(@"setColor:%@", color);
+    if (color) {
+        if (!CPKColorHasValidColorSpace(color)) {
+            // Pattern colors and some catalog colors don't support colorSpace
+            return;
+        }
+        self.colorSpace = color.colorSpace;
+    }
+    self.view.color = color;
+    self.view.selectedColor = color;
+}
+
+- (void)setAlphaAllowed:(BOOL)alphaAllowed {
+    _alphaAllowed = alphaAllowed;
+    self.view.alphaAllowed = alphaAllowed;
+}
+
+- (void)setNoColorAllowed:(BOOL)noColorAllowed {
+    _noColorAllowed = noColorAllowed;
+    self.view.noColorAllowed = noColorAllowed;
+}
+
+- (void)setEnabled:(BOOL)enabled {
+  [super setEnabled:enabled];
+    self.view.disabled = !enabled;
+}
+
+- (void)setContinuous:(BOOL)continuous {
+  _continuous = continuous;
+}
+
+- (BOOL)isContinuous {
+  return _continuous;
+}
+
+- (NSRect)presentationRect {
+  return self.bounds;
+}
+
+- (NSView *)presentingView {
+  return self;
+}
+
+- (void)colorChangedByDrag:(NSColor *)color {
+    CPKLog(@"colorChangedByDrag:%@", color);
+    [self setColor:color];
+    [self sendAction:self.action to:self.target];
+    [_view pushColor:color];
+}
+
+- (CPKColorWellView *)view {
+    [self load];
+    return _view;
+}
+
+@end

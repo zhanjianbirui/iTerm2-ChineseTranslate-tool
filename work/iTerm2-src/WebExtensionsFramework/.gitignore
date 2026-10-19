@@ -1,0 +1,17 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+DerivedData/
+Build/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/firefox
+.build-test

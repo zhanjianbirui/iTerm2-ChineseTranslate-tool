@@ -1,0 +1,18 @@
+// Simplified Chinese localization for iTerm2 3.6.11.
+
+"CFBundleDisplayName" = "iTerm2 中文版";
+"CFBundleName" = "iTerm2 中文版";
+"NSAppleEventsUsageDescription" = "iTerm2 中的应用程序请求使用 AppleScript。";
+"NSBluetoothAlwaysUsageDescription" = "iTerm2 中的应用程序请求使用蓝牙。";
+"NSCalendarsUsageDescription" = "iTerm2 中的应用程序请求访问日历数据。";
+"NSCameraUsageDescription" = "iTerm2 请求使用相机。";
+"NSContactsUsageDescription" = "iTerm2 请求访问您的通讯录。";
+"NSLocalNetworkUsageDescription" = "iTerm2 中的应用程序请求访问本地网络。";
+"NSLocationAlwaysUsageDescription" = "iTerm2 中的应用程序请求在后台使用您的位置信息。";
+"NSLocationUsageDescription" = "iTerm2 中的应用程序请求使用您的位置信息。";
+"NSLocationWhenInUseUsageDescription" = "iTerm2 中的应用程序请求在使用期间访问您的位置信息。";
+"NSMicrophoneUsageDescription" = "iTerm2 中的应用程序请求使用麦克风。";
+"NSPhotoLibraryUsageDescription" = "iTerm2 中的应用程序请求访问照片图库。";
+"NSRemindersUsageDescription" = "iTerm2 中的应用程序请求访问提醒事项。";
+"NSSpeechRecognitionUsageDescription" = "iTerm2 中的应用程序请求使用语音识别。";
+"NSSystemAdministrationUsageDescription" = "iTerm2 中的程序执行的操作需要更高权限。";

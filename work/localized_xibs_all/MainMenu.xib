@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="201" id="479"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="2Vu-IH-16w" customClass="ColorsMenuItemView"/>
+        <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
+            <items>
+                <menuItem title="iTerm2" id="56">
+                    <menu key="submenu" title="iTerm2" systemMenu="apple" id="57">
+                        <items>
+                            <menuItem title="关于 iTerm2" identifier="About iTerm2" id="233">
+                                <connections>
+                                    <action selector="showAbout:" target="201" id="509"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="显示每日提示" identifier="Show Tip of the Day" id="ft3-BP-igZ">
+                                <connections>
+                                    <action selector="showTipOfTheDay:" target="201" id="mc2-ec-uGY"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Dxk-DH-qzi">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="检查更新…" identifier="Check For Updates…" id="880">
+                                <connections>
+                                    <action selector="checkForUpdatesFromMenu:" target="201" id="vmh-LD-TwW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Dpc-y9-dq3">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="切换调试日志" enabled="NO" identifier="Toggle Debug Logging" id="950">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="debugLogging:" target="-1" id="951"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="拷贝性能统计" identifier="Copy Performance Stats" id="cYu-lQ-5GD">
+                                <connections>
+                                    <action selector="copyPerformanceStats:" target="201" id="Q9K-AS-x9Q"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="捕获 GPU 帧" keyEquivalent="G" identifier="Capture Metal Frame" id="8KO-hG-xdC">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="captureNextMetalFrame:" target="-1" id="vR7-q7-IN8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="199">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="设置…" keyEquivalent="," identifier="Preferences..." id="129">
+                                <connections>
+                                    <action selector="showPrefWindow:" target="201" id="574"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="143">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="服务" id="131">
+                                <menu key="submenu" title="服务" systemMenu="services" id="130"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="144">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="隐藏 iTerm2" keyEquivalent="h" identifier="Hide iTerm2" id="134">
+                                <connections>
+                                    <action selector="hide:" target="-2" id="152"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="隐藏其他应用" keyEquivalent="h" identifier="Hide Others" id="145">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-2" id="146"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="全部显示" identifier="Show All" id="150">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-2" id="153"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="149">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="安全键盘输入" keyEquivalent="s" identifier="Secure Keyboard Entry" id="1174">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleSecureInput:" target="201" id="1175"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1176"/>
+                            <menuItem title="将 iTerm2 设为默认终端" keyEquivalent="\" identifier="Make iTerm2 Default Term" id="1470">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="makeDefaultTerminal:" target="201" id="1472"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="将“终端”设为默认终端" alternate="YES" keyEquivalent="\" identifier="Make Terminal Default Term" id="1473">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="unmakeDefaultTerminal:" target="201" id="1475"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="安装 Shell 集成" alternate="YES" identifier="Install Shell Integration" id="rHN-nq-xah">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="installShellIntegration:" target="-1" id="QBH-7C-wWV"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="从程序坞菜单中移除最近的配置文件" identifier="Remove Recent Profiles from Dock Menu" id="WcV-7l-ycc">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeRecentProfilesFromDockMenu:" target="201" id="aKX-KH-bN7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1469"/>
+                            <menuItem title="退出 iTerm2" keyEquivalent="q" identifier="Quit iTerm2" id="136">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="532"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Shell" id="83">
+                    <menu key="submenu" title="Shell" id="81">
+                        <items>
+                            <menuItem title="新建窗口" alternate="YES" keyEquivalent="n" identifier="New Window" id="872">
+                                <connections>
+                                    <action selector="newWindow:" target="201" id="873"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="使用当前配置文件新建窗口" keyEquivalent="N" identifier="New Window with Current Profile" id="LR1-f6-Fa9">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="newWindowWithSameProfile:" target="201" id="oHG-Sj-1ym"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="新建标签页" keyEquivalent="t" identifier="New Tab" id="867">
+                                <connections>
+                                    <action selector="newSession:" target="201" id="871"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="使用当前配置文件新建标签页" keyEquivalent="T" identifier="New Tab with Current Profile" id="1302">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="newSessionWithSameProfile:" target="201" id="1304"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1199"/>
+                            <menuItem title="复制窗口" identifier="Duplicate Window" id="9BQ-Nt-1uD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="duplicateWindow:" target="-1" id="lzk-wL-GJ6"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="复制标签页" identifier="Duplicate Tab" id="Heo-Xb-RKN">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="duplicateTab:" target="-1" id="DcR-B7-VKj"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="w1g-nK-kOV"/>
+                            <menuItem title="使用当前配置文件水平分屏" keyEquivalent="D" identifier="Split Horizontally with Current Profile" id="1201">
+                                <connections>
+                                    <action selector="splitHorizontally:" target="-1" id="1203"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="使用当前配置文件垂直分屏" keyEquivalent="d" identifier="Split Vertically with Current Profile" id="1200">
+                                <connections>
+                                    <action selector="splitVertically:" target="-1" id="1202"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="水平分屏…" keyEquivalent="H" identifier="Split Horizontally…" id="1289">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openSplitHorizontallySheet:" target="-1" id="1293"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="垂直分屏…" keyEquivalent="V" identifier="Split Vertically…" id="1291">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openSplitVerticallySheet:" target="-1" id="1294"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="632">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="保存内容…" identifier="Log.SaveContents" id="eia-2d-pmU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveContents:" target="-1" id="bgb-Rp-6yV"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="保存所选文字…" keyEquivalent="s" identifier="Save Selected Text…" id="692">
+                                <connections>
+                                    <action selector="saveDocumentAs:" target="-1" id="695"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="693">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="关闭" keyEquivalent="w" identifier="Close" id="1184">
+                                <connections>
+                                    <action selector="closeCurrentSession:" target="-1" id="1185"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="关闭终端窗口" keyEquivalent="W" identifier="Close Terminal Window" id="598">
+                                <connections>
+                                    <action selector="closeTerminalWindow:" target="-1" id="0gb-0b-Ecd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="关闭标签页中的所有窗格" keyEquivalent="w" identifier="Close All Panes in Tab" id="635">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="closeCurrentTab:" target="-1" id="1186"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="9vB-1n-LfH">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="撤销关闭" identifier="Undo Close" id="OIr-XE-oT1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="undoCloseSession:" target="201" id="df0-of-sxF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="224">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="归档" id="fb0-0W-qYG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="归档" id="A4d-bK-MaG">
+                                    <items>
+                                        <menuItem title="保存当前会话的归档…" id="owl-7s-n9a">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="saveArchive:" target="-1" id="Hkx-vn-Rgq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="恢复归档…" id="UXA-3l-Mrb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="restoreArchive:" target="-1" id="mU3-QI-qQ4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="xCi-zA-H6Z">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="sr9-jE-RB0">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="广播输入" id="1261">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="广播输入" id="1262">
+                                    <items>
+                                        <menuItem title="仅向当前会话发送输入" keyEquivalent="I" identifier="Broadcast Input.Send Input to Current Session Only" id="1268">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="disableBroadcasting:" target="-1" id="1275"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="向所有标签页中的所有窗格广播输入" keyEquivalent="I" identifier="Broadcast Input.Broadcast Input to All Panes in All Tabs" id="1264">
+                                            <connections>
+                                                <action selector="enableSendInputToAllTabs:" target="-1" id="1274"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="向当前标签页中的所有窗格广播输入" keyEquivalent="i" identifier="Broadcast Input.Broadcast Input to All Panes in Current Tab" id="1266">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="enableSendInputToAllPanes:" target="-1" id="1273"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="切换向当前会话广播输入" keyEquivalent="I" identifier="Broadcast Input.Toggle Broadcast Input to Current Session" id="1477">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="toggleBroadcastingToCurrentSession:" target="-1" id="1479"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="1480"/>
+                                        <menuItem title="显示背景图案指示器" identifier="Broadcast Input.Show Background Pattern Indicator" id="1412">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleUseBackgroundPatternIndicator:" target="201" id="1414"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1307">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="tmux" id="1448">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="tmux" id="1449">
+                                    <items>
+                                        <menuItem title="分离" alternate="YES" keyEquivalent="D" identifier="tmux.Detach" id="1459">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="detachTmux:" target="-1" id="1460"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="强制分离" alternate="YES" identifier="tmux.Force Detach" id="BV1-u8-JSz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="forceDetachTmux:" target="-1" id="d8H-zq-jSZ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="DAw-wn-hTl"/>
+                                        <menuItem title="新建 tmux 窗口" alternate="YES" keyEquivalent="N" identifier="tmux.New Tmux Window" id="1455">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="newTmuxWindow:" target="-1" id="1456"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="新建 tmux 标签页" alternate="YES" keyEquivalent="T" identifier="tmux.New Tmux Tab" id="1452">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="newTmuxTab:" target="-1" id="1453"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Kge-Ia-xho"/>
+                                        <menuItem title="暂停窗格" alternate="YES" keyEquivalent="P" identifier="trmux.Pause Pane" id="Rtn-t8-0OH">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="toggleTmuxPausePane:" target="-1" id="m3O-yf-6Rt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="R9F-Od-qZO"/>
+                                        <menuItem title="仪表板" alternate="YES" identifier="tmux.Dashboard" id="1461">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="openDashboard:" target="-1" id="1463"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="ssh" id="NGU-fy-0o1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="ssh" id="pbR-BZ-1Bc">
+                                    <items>
+                                        <menuItem title="断开连接" identifier="ssh.Disconnect" id="ycJ-VX-uQI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="sshDisconnect:" target="-1" id="ccH-a0-Ijh"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="下载文件…" identifier="ssh.Download Files" id="TeM-om-H0z">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="downloadFiles:" target="-1" id="T2e-RW-XQ6"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1439"/>
+                            <menuItem title="页面设置…" keyEquivalent="P" identifier="Page Setup..." id="685">
+                                <connections>
+                                    <action selector="runPageLayout:" target="-1" id="691"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打印" id="822">
+                                <menu key="submenu" title="打印" id="824">
+                                    <items>
+                                        <menuItem title="屏幕" keyEquivalent="p" identifier="Print.Screen" id="823">
+                                            <connections>
+                                                <action selector="print:" target="-1" id="827"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="选择" tag="1" keyEquivalent="p" identifier="Print.Selection" id="825">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="print:" target="-1" id="828"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="缓冲区" tag="2" keyEquivalent="P" identifier="Print.Buffer" id="826">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="print:" target="-1" id="829"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="689">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="编辑" id="163">
+                    <menu key="submenu" title="编辑" id="169">
+                        <items>
+                            <menuItem title="撤销" keyEquivalent="z" identifier="Undo" id="1061">
+                                <connections>
+                                    <action selector="undo:" target="201" id="Fvg-bx-tXA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="重做" keyEquivalent="Z" identifier="Redo" id="1063">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="1064"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1141"/>
+                            <menuItem title="剪切" keyEquivalent="x" identifier="Cut" id="157">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="1404"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="拷贝" keyEquivalent="c" identifier="Copy" id="1326">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="1327"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="连同样式一起拷贝" alternate="YES" keyEquivalent="c" identifier="Copy with Styles" id="n4U-yI-y7D">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="copyWithStyles:" target="-1" id="B2X-kC-nrq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="连同控制序列一起拷贝" alternate="YES" identifier="Copy with Control Sequences" id="GT8-oj-uFO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="copyWithControlSequences:" target="-1" id="mvT-2h-6oO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="复制模式" keyEquivalent="C" identifier="Copy Mode" id="CQc-0U-rfn">
+                                <connections>
+                                    <action selector="toggleCopyMode:" target="-1" id="nrd-WW-ADX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="粘贴" keyEquivalent="v" identifier="Paste" id="213">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="215"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="特殊粘贴" id="1158">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="特殊粘贴" id="1159">
+                                    <items>
+                                        <menuItem title="高级粘贴…" tag="1" keyEquivalent="v" identifier="Paste Special.Advanced Paste…" id="tnr-HI-5ah">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="pasteOptions:" target="-1" id="tHt-uB-46s"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="粘贴所选内容" keyEquivalent="V" identifier="Paste Special.Paste Selection" id="1164">
+                                            <connections>
+                                                <action selector="pasteSelection:" target="-1" id="1167"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="粘贴 Base64 编码的文件" identifier="Paste Special.Paste File Base64-Encoded" id="Xn8-na-Zys">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="pasteBase64Encoded:" target="-1" id="GCk-nQ-lWq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="meJ-Eb-j6h"/>
+                                        <menuItem title="慢速粘贴" tag="2" identifier="Paste Special.Paste Slowly" id="1166">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="paste:" target="-1" id="1169"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="VVy-45-Msn"/>
+                                        <menuItem title="加快粘贴" tag="2" identifier="Paste Special.Paste Faster" id="1483">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="pasteFaster:" target="201" id="1496"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="慢速粘贴（稍快）" tag="2" alternate="YES" identifier="Paste Special.Paste Slowly Faster" id="1492">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="pasteSlowlyFaster:" target="201" id="1498"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="减慢粘贴" tag="2" identifier="Paste Special.Paste Slower" id="1489">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="pasteSlower:" target="201" id="1497"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="慢速粘贴（更慢）" tag="2" alternate="YES" identifier="Paste Special.Paste Slowly Slower" id="1494">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="pasteSlowlySlower:" target="201" id="1499"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="htR-tW-t3s"/>
+                                        <menuItem title="多行粘贴前提醒" identifier="Paste Special.Warn Before Multi-Line Paste" id="IH2-H8-9Ao">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleMultiLinePasteWarning:" target="201" id="BeA-rG-dNT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="仅在 Shell 提示符处警告多行粘贴" tag="1" identifier="Paste Special.Limit Multi-Line Paste Warning to Shell Prompt" id="L16-T3-OVz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleMultiLinePasteWarning:" target="201" id="hP8-62-8Sv"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="QxI-p8-oyN"/>
+                                        <menuItem title="粘贴时询问是否将制表符转换为空格" identifier="Paste Special.Prompt to Convert Tabs to Spaces when Pasting" id="GqP-hQ-yD1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="promptToConvertTabsToSpacesWhenPasting:" target="201" id="1YE-bw-C1K"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="dhb-3U-t9r"/>
+                                        <menuItem title="在 Shell 提示符处粘贴以换行结尾的单行内容前提醒" tag="2" identifier="Paste Special.Warn Before Pasting One Line Ending in a Newline at Shell Prompt" id="YHP-Qx-eCZ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleMultiLinePasteWarning:" target="201" id="FcI-Al-Hhz"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="EC1-3K-Gyr"/>
+                            <menuItem title="替换所选内容" id="5uf-4h-Tfe">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="替换所选内容" id="p0c-xV-Sfk">
+                                    <items>
+                                        <menuItem title="在本地渲染所选内容" keyEquivalent="e" identifier="Render Selection Natively" id="SEy-mc-25m">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="renderSelection:" target="-1" id="CYd-u9-J4s"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="替换为格式化 JSON" identifier="Replace Selection.Replace with Pretty-Printed JSON" id="Fsl-eD-Noh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="replaceSelectionWithPrettyPrintedJSON:" target="-1" id="9Ho-k9-mP3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="替换为 Base64 编码值" identifier="Replace Selection.Replace with Base 64-Encoded Value" id="ZaV-ga-7GF">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="replaceSelectionWithBase64Encoded:" target="-1" id="42k-hZ-25i"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="替换为 Base64 解码值" identifier="Replace Selection.Replace with Base 64-Decoded Value" id="3Es-XB-YYS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="replaceSelectionWithBase64Decoded:" target="-1" id="tSe-ze-5zO"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="b0A-74-lFS"/>
+                            <menuItem title="使用人工智能" keyEquivalent="y" identifier="Engage Artificial Intelligence" id="zgu-Gv-WUr">
+                                <connections>
+                                    <action selector="performNaturalLanguageQuery:" target="-1" id="oJ4-at-Hbh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="用 AI 解释输出" keyEquivalent="y" identifier="Explain Output with AI" id="vlr-uw-Err">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="explainOutputWithAI:" target="-1" id="fVo-Xm-7jt"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="jHq-aL-J2z"/>
+                            <menuItem title="片段" identifier="Edit.Snippets" id="s0f-jP-7Pk" userLabel="Snippets">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="片段" id="sOq-3j-vtq" userLabel="Snippets"/>
+                            </menuItem>
+                            <menuItem title="操作" identifier="Edit.Actions" id="8Ja-GB-Waf">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="操作" id="w4F-uL-QPB" userLabel="Snippets"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="6Wz-M8-IFF"/>
+                            <menuItem title="打开所选内容" keyEquivalent="o" identifier="Open Selection" id="upW-1r-eM7">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openSelection:" target="-1" id="iqq-zv-3ZQ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="跳转到选区" keyEquivalent="j" identifier="Find.Jump to Selection" id="764">
+                                <connections>
+                                    <action selector="jumpToSelection:" target="-1" id="770"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ILa-Wg-F9W"/>
+                            <menuItem title="全选" keyEquivalent="a" identifier="Select All" id="172">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="179"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="选择时遵循软换行边界" keyEquivalent="A" identifier="Selection Respects Soft Boundaries" id="jDU-f2-OSh">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleSelectionRespectsSoftBoundaries:" target="-1" id="1pQ-03-P8s"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="选择上一条命令的输出" keyEquivalent="A" identifier="Select Output of Last Command" id="JqU-xR-XbI">
+                                <connections>
+                                    <action selector="selectOutputOfLastCommand:" target="-1" id="3Sj-9D-V5q"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="选择当前命令" identifier="Select Current Command" id="SCG-gK-0nY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="selectCurrentCommand:" target="-1" id="IvA-up-MEG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="174">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="查找" id="759">
+                                <menu key="submenu" title="查找" id="760">
+                                    <items>
+                                        <menuItem title="查找…" tag="1" keyEquivalent="f" identifier="Find.Find..." id="Bx1-Fd-J2S">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="qca-qp-GRa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找下一个" keyEquivalent="g" identifier="Find.Find Next" id="761">
+                                            <connections>
+                                                <action selector="findNext:" target="-1" id="767"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找上一个" keyEquivalent="G" identifier="Find.Find Previous" id="763">
+                                            <connections>
+                                                <action selector="findPrevious:" target="-1" id="768"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="使用所选内容查找" tag="7" keyEquivalent="e" identifier="Find.Use Selection for Find" id="758">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="Vts-fb-OCE"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="清除查找" tag="7" keyEquivalent="E" identifier="Find.Clear Find" id="VDU-gj-HpO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="clearFindString:" target="201" id="Eod-sA-cqH"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="全局查找…" keyEquivalent="F" identifier="Find.Find Globally..." id="yIL-PC-jnC">
+                                            <connections>
+                                                <action selector="findGlobally:" target="201" id="Oyc-5J-YYw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="选择匹配项" tag="9" identifier="Find.ConvertMatchesToSelections" id="ULH-1B-QtL">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="qvV-Sf-nnK"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="PJB-Pw-4PO">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="查找网址" keyEquivalent="u" identifier="Find.Find URLs" id="VPn-YM-CGp">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="findUrls:" target="-1" id="PCp-uW-FfK"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找所有智能选择匹配项" keyEquivalent="U" identifier="Find.Find All Smart Selection  Matches" id="MFq-yU-N9S">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="smartSelectAllVisible:" target="-1" id="Uk1-nN-UIn"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="选择要打开的结果" keyEquivalent="O" identifier="Find.Pick Result To Open" id="KTc-zQ-Rb6">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="revealContentNavigationShortcuts:" target="-1" id="5YT-AN-QYt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="sV9-Bl-1d4">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="过滤" keyEquivalent="F" identifier="Find.Filter" id="rPD-q2-ZI6">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="filter:" target="-1" id="aWL-0M-Ywe"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="765">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="标记与注释" id="Lfh-pN-XLJ">
+                                <menu key="submenu" title="标记与注释" id="8TS-w9-E3t">
+                                    <items>
+                                        <menuItem title="设置标记" keyEquivalent="M" identifier="Marks and Annotations.Set Mark" id="1243">
+                                            <connections>
+                                                <action selector="saveScrollPosition:" target="-1" id="1247"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="跳转到标记" keyEquivalent="J" identifier="Marks and Annotations.Jump to Mark" id="1245">
+                                            <connections>
+                                                <action selector="jumpToSavedScrollPosition:" target="-1" id="1248"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Pvx-sU-bPM">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="下一个标记" keyEquivalent="" identifier="Marks and Annotations.Next Mark" id="mcu-LX-9Aj">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="nextMark:" target="-1" id="hrq-af-Vgg"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="上一个标记" keyEquivalent="" identifier="Marks and Annotations.Previous Mark" id="sZa-7I-YDa">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="previousMark:" target="-1" id="ogz-2q-Ljb"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="E6L-9C-lk7">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="在光标处添加注释" keyEquivalent="m" identifier="Marks and Annotations.Add Annotation at Cursor" id="Fna-Ng-9y6">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="addNoteAtCursor:" target="-1" id="B5P-c8-bDe"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Dk5-W1-EQg">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="下一个注释" keyEquivalent="" identifier="Marks and Annotations.Next  Annotation" id="FvD-eZ-yBV">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="nextAnnotation:" target="-1" id="vEg-Q0-9jd"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="上一个注释" keyEquivalent="" identifier="Marks and Annotations.Previous  Annotation" id="q2T-zq-icd">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="previousAnnotation:" target="-1" id="R3u-d7-8eC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="OqF-Et-Rt4">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="提醒" id="noE-Gg-Cgs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="提醒" id="GSK-c3-R0J">
+                                                <items>
+                                                    <menuItem title="下一个标记时提醒" keyEquivalent="a" identifier="Marks and Annotations.Alerts.Alert on Next Mark" id="Qj6-xH-l9X">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleAlertOnNextMark:" target="-1" id="hTO-Iy-yuC"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="后台会话中收到标记时提醒" identifier="Marks and Alerts.Alerts.Alert on Marks in Offscreen Sessions" id="qcQ-i5-i8s">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="toggleAlertOnMarksInOffscreenSessions:" target="201" id="WEg-8X-bzA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="cY7-mh-hpz">
+                                                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                    </menuItem>
+                                                    <menuItem title="显示模态提醒框" identifier="Marks and Annotations.Alerts.Show Modal Alert Box" id="mat-0d-WzN">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="enableMarkAlertShowsModalAlert:" target="201" id="rp1-HE-PMx"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="发送通知" identifier="Marks and Annotations.Alerts.Post Notification" id="QeX-5T-qxA">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="enableMarkAlertPostsNotification:" target="201" id="LvA-zT-HJj"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="播放声音" identifier="Marks and Notes.Alerts.Play a Sound" id="Mhn-ha-kyp">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="enableMarkAlertRingsBell:" target="201" id="MGh-mi-BNu"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="设置命名标记" keyEquivalent="M" identifier="Set Named Mark" id="8d7-qE-wpn">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="addNamedMark:" target="-1" id="Zg2-RM-lft"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="命名标记" id="bWZ-Rb-J4D">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="命名标记" id="ZSr-qC-BlG"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1238">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                <menu key="submenu" id="1239">
+                                    <items>
+                                        <menuItem title="项目 1" enabled="NO" id="1242">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="项目 2" enabled="NO" id="1241">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="项目 3" enabled="NO" id="1240">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="折叠所选行" keyEquivalent="L" identifier="Fold Selected Lines" id="7ly-zH-p8X">
+                                <connections>
+                                    <action selector="foldSelection:" target="-1" id="hgD-pz-qFa"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Tkg-kg-CnW">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                <menu key="submenu" id="Sgf-ct-nyp">
+                                    <items>
+                                        <menuItem title="项目 1" enabled="NO" id="5EJ-KF-6Ll">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="项目 2" enabled="NO" id="Laq-Gc-l1k">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="项目 3" enabled="NO" id="pqa-Lr-NlO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="清空缓冲区" keyEquivalent="k" identifier="Clear Buffer" id="217">
+                                <connections>
+                                    <action selector="clearBuffer:" target="-1" id="220"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="清除即时回放" keyEquivalent="k" identifier="Clear Instant Replay" id="dxF-XL-vIa">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="clearInstantReplay:" target="-1" id="r9X-aA-p10"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="清空回滚缓冲区" keyEquivalent="K" identifier="Clear Scrollback Buffer" id="755">
+                                <connections>
+                                    <action selector="clearScrollbackBuffer:" target="-1" id="756"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="清除到选区开头" keyEquivalent="l" identifier="Clear to Start of Selection" id="CYE-nw-eWv">
+                                <connections>
+                                    <action selector="clearToStartOfSelection:" target="-1" id="Hme-Uy-xl3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="清除到上一个标记" keyEquivalent="l" identifier="Clear to Last Mark" id="Xsz-J9-7ar">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="clearToLastMark:" target="-1" id="5rW-GL-dJl"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="显示" id="802">
+                    <menu key="submenu" title="显示" id="803">
+                        <items>
+                            <menuItem title="在全屏模式下显示标签页" keyEquivalent="T" identifier="Show Tabs in Fullscreen" id="1257">
+                                <connections>
+                                    <action selector="toggleFullScreenTabBar:" target="-1" id="1259"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="切换全屏" keyEquivalent="f" identifier="Toggle Full Screen" id="914">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullScreenMode:" target="-1" id="1256"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="bWM-We-TVH"/>
+                            <menuItem title="工具栏面板" identifier="Toolbelt" id="1295">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="工具栏面板" id="1296">
+                                    <items>
+                                        <menuItem title="显示工具栏面板" keyEquivalent="B" identifier="Show Toolbelt" id="1297">
+                                            <connections>
+                                                <action selector="toggleToolbeltVisibility:" target="-1" id="v3c-uP-c8Q"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="设置默认宽度" identifier="Set Default Width" id="81r-Vc-nVm">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setDefaultToolbeltWidth:" target="-1" id="QNN-Mh-iac"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="1298"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="pT2-uv-5Ky"/>
+                            <menuItem title="使用透明度" keyEquivalent="u" identifier="Use Transparency" id="1228">
+                                <connections>
+                                    <action selector="toggleUseTransparency:" target="201" id="1229"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="禁用活动窗口透明度" identifier="Disable Transparency for Active Window" id="FNR-IX-80x">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleDisableTransparencyForActiveWindow:" target="201" id="vfc-8R-jqZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="806">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="放大所选内容" keyEquivalent="z" identifier="Zoom In on Selection" id="Atu-fG-56G">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="zoomOnSelection:" target="-1" id="Yfw-BL-sPd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="缩小" identifier="Zoom Out" id="0A4-80-ghh">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="zoomOut:" target="-1" id="DDb-mL-4x6"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="QEZ-2e-3zm">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="定位光标" keyEquivalent="/" identifier="Find Cursor" id="1286">
+                                <connections>
+                                    <action selector="findCursor:" target="-1" id="1288"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Fkp-Ji-fyj">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="显示光标引导线" keyEquivalent=";" identifier="Show Cursor Guide" id="DcF-ub-g6d">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleCursorGuide:" target="-1" id="Vxk-ww-Ugb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="显示时间戳" keyEquivalent="E" identifier="Show Timestamps" id="TnF-kz-Lf0">
+                                <connections>
+                                    <action selector="toggleShowTimestamps:" target="-1" id="oGg-h2-Ex7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="显示注释" keyEquivalent="\" identifier="Show Annotations" id="pAu-j3-wEC">
+                                <connections>
+                                    <action selector="showHideNotes:" target="-1" id="bWx-ZS-6aE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="显示编写器" keyEquivalent="." identifier="Composer" id="Bhs-45-5yR">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="compose:" target="-1" id="dCP-co-yhy"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ikb-Lb-87K">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="自动命令补全" keyEquivalent="Y" identifier="Auto Command Completion" id="9DF-nf-qif">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleAutoCommandHistory:" target="-1" id="asy-Rr-9Eu"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="自动编写" keyEquivalent="." identifier="Auto Composer" id="TJi-5Q-RCM">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleAutoComposer:" target="-1" id="Oga-l4-yoN"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="gzL-UV-S2y">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="快速打开" keyEquivalent="O" identifier="Open Quickly" id="Knm-gZ-dFc">
+                                <connections>
+                                    <action selector="openQuickly:" target="201" id="B7o-gt-d3A"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="VKC-UO-5Cj">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="最大化活动窗格" identifier="Maximize Active Pane" id="1233">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="maximizePane:" target="201" id="1236"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1235">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="放大文字" keyEquivalent="+" identifier="Make Text Bigger" id="804">
+                                <connections>
+                                    <action selector="biggerFont:" target="-1" id="hwQ-4a-7QF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="文字恢复为正常大小" keyEquivalent="0" identifier="Make Text Normal Size" id="1464">
+                                <connections>
+                                    <action selector="returnToDefaultSize:" target="-1" id="FDv-eO-hny"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="恢复文字与会话大小" alternate="YES" keyEquivalent="0" identifier="Restore Text and Session Size" id="1467">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="returnToDefaultSize:" target="-1" id="6s0-TK-HAT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="缩小文字" keyEquivalent="-" identifier="Make Text Smaller" id="805">
+                                <connections>
+                                    <action selector="smallerFont:" target="-1" id="EDt-76-pVs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="大小变化时更新配置文件" identifier="Size Changes Update Profile" id="wau-MD-nUH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleSizeChangesAffectProfile:" target="-1" id="BiY-GU-Ndu"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="915">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="开始即时回放" keyEquivalent="b" identifier="Start Instant Replay" id="976">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="irPrev:" target="-1" id="982"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="会话" identifier="Session" id="ZGW-Bo-6S6">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="会话" id="3Ow-tu-l1x">
+                        <items>
+                            <menuItem title="编辑会话…" keyEquivalent="i" identifier="Edit Session…" id="954">
+                                <connections>
+                                    <action selector="editCurrentSession:" target="201" id="955"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="w7i-MX-J2b">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="运行协同进程…" keyEquivalent="r" identifier="Run Coprocess…" id="1305">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="runCoprocess:" target="-1" id="1320"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="停止协同进程" keyEquivalent="R" identifier="Stop Coprocess" id="1321">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="stopCoprocess:" target="-1" id="1325"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="xtQ-dE-5vt">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="重新启动会话" identifier="Restart Session" id="Jvo-Bw-UNg">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="restartSession:" target="-1" id="zO6-It-s2w"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="复制会话" identifier="Duplicate Session" id="01D-vQ-sLv">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="duplicateSession:" target="-1" id="nzu-Ed-FXh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ibp-nX-yTw">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="打开自动补全…" keyEquivalent=";" identifier="Open Autocomplete…" id="1144">
+                                <connections>
+                                    <action selector="openAutocomplete:" target="-1" id="1146"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打开命令历史记录…" keyEquivalent=";" identifier="Open Command History…" id="MXE-be-qxv">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openCommandHistory:" target="-1" id="XHr-bn-Hbc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打开最近使用的目录…" keyEquivalent="/" identifier="Open Recent Directories…" id="7X6-Am-EEB">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openDirectories:" target="-1" id="U0c-KD-2xF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打开粘贴历史记录…" keyEquivalent="H" identifier="Open Paste History…" id="1142">
+                                <connections>
+                                    <action selector="openPasteHistory:" target="-1" id="1143"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打开 AI 对话…" keyEquivalent="Y" identifier="Open AI Chat" id="tkq-fN-kF5">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openAIChat:" target="-1" id="e9b-aj-NLF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="908">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="触发器" identifier="Triggers" id="DB9-tf-hPg">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="触发器" id="Ixq-yO-JO6">
+                                    <items>
+                                        <menuItem title="添加触发器…" identifier="Add Trigger" id="xcL-dd-3m4">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="addTrigger:" target="-1" id="iVb-tZ-MfQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="编辑触发器" identifier="Edit Triggers" id="rRB-v6-pdW">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="editTriggers:" target="-1" id="lJ0-nl-NnJ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="在交互式应用中启用触发器" identifier="Enable Triggers in Interactive Apps" id="lA4-rW-ioh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleEnableTriggersInInteractiveApps:" target="-1" id="8cA-Uc-bjz"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="74b-21-sZF"/>
+                                        <menuItem title="全部启用" identifier="Triggers.Enable All" id="mcR-jM-n5n">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="enableAllTriggers:" target="-1" id="hwR-hE-di0"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="全部禁用" identifier="Triggers.Disable All" id="B3C-jO-rIU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="disableAllTriggers:" target="-1" id="CnC-kp-auE"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="2Gf-zh-GWz">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="重置" keyEquivalent="r" identifier="Reset" id="907">
+                                <connections>
+                                    <action selector="reset:" target="-1" id="909"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="重置字符集" identifier="Reset Character Set" id="1500">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="resetCharset:" target="-1" id="1502"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Sq7-yQ-kOu">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="移动会话" id="B8N-yx-8Zh">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="移动会话" id="cvc-Ly-sgo">
+                                    <items>
+                                        <menuItem title="将会话移到窗口" identifier="Move Session to Window" id="Hlz-4M-IYw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="moveSessionToWindow:" target="-1" id="wG5-71-6aQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="将会话移到标签页" identifier="Move Session to Tab" id="GfE-qn-Fur">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="moveSessionToTab:" target="-1" id="gBR-Yc-45o"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="将会话移到分屏窗格" identifier="Move Session to Split Pane" id="3uK-At-K7k">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="movePane:" target="-1" id="dpH-EE-K3B"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="eIc-Q6-Icw">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="日志" id="227">
+                                <menu key="submenu" title="日志" id="228">
+                                    <items>
+                                        <menuItem title="记录到文件" identifier="Log.Toggle" id="dj8-Cg-b5y">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="startStopLogging:" target="-1" id="8Wf-nY-BBO"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="xCY-NV-Vjc"/>
+                                        <menuItem title="导入录制内容" identifier="Log.ImportRecording" id="Xu9-L5-uPr">
+                                            <connections>
+                                                <action selector="loadRecording:" target="201" id="1pk-Ll-Rih"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="导出录制内容" identifier="Log.ExportRecording" id="Bxx-ai-xsx">
+                                            <connections>
+                                                <action selector="exportRecording:" target="-1" id="e25-uz-tFr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="e9g-9L-fVf"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vXn-Fa-KDE"/>
+                            <menuItem title="终端状态" id="oeT-w1-6UG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" id="7tI-ug-IYb">
+                                    <items>
+                                        <menuItem title="备用屏幕" tag="1" identifier="Alternate Screen" id="n7j-J8-y3V">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleAlternateScreen:" target="-1" id="Wvu-gV-nkX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="7kW-Nx-k6m"/>
+                                        <menuItem title="焦点报告" tag="2" identifier="Focus Reporting" id="2Ek-PE-o7F">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleFocusReporting:" target="-1" id="EMX-TB-2cQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="鼠标报告" tag="3" identifier="Mouse Reporting" id="Lbh-lI-2tO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleMouseReporting:" target="-1" id="xZ2-Nv-hGN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="粘贴括号保护" tag="4" identifier="Paste Bracketing" id="FNV-7O-Feh" userLabel="Application Cursor Keys">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateTogglePasteBracketing:" target="-1" id="6Hi-mv-9nA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="sol-8N-Vnq"/>
+                                        <menuItem title="应用光标" tag="5" identifier="Application Cursor" id="6d3-xQ-NPR" userLabel="Application Cursor Keys">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationCursor:" target="-1" id="Xmp-n6-Y6S"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="应用小键盘" tag="6" identifier="Application Keypad" id="xWN-I8-ExG">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="vqM-de-PE3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Csl-Na-fLA"/>
+                                        <menuItem title="标准按键报告模式" tag="7" identifier="Terminal State.Standard Key Reporting" id="NiW-ZC-qkW">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="dEu-4i-avK"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="modifyOtherKeys 模式 1" tag="8" identifier="Terminal State.Report Modifiers like xterm 1" id="xK3-pO-8bT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="V3u-fZ-VC2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="modifyOtherKeys 模式 2" tag="9" identifier="Terminal State.Report Modifiers like xterm 2" id="kN6-Ru-Vvk">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="hFh-Cz-Vqt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="CSI u 模式" tag="10" identifier="Terminal State.Report Modifiers with CSI u" id="Qlm-EZ-J8K">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="kMi-Ez-WPl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="原始按键报告模式" tag="11" identifier="Terminal State.Raw Key Reporting" id="HUg-bw-Kax">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="Io8-vc-lTj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Rr9-Ff-Vjq"/>
+                                        <menuItem title="区分 Escape 键" tag="12" identifier="Terminal State.Disambiguate Escape" id="KSe-b9-e6z">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="ZES-6p-vhi"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="报告所有事件类型" tag="13" identifier="Terminal State.Report All Event Types" id="xAJ-2s-wRO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="BF0-Kr-bXN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="报告备用按键" tag="14" identifier="Terminal State.Report Alternate Keys" id="OeA-3R-GMn">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="NVR-92-dOb"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="将所有按键报告为 Escape 码" tag="15" identifier="Terminal State.Report All Keys as Escape Codes" id="Hnr-VA-NP8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="5IO-5e-QkP"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="报告关联文本" tag="16" identifier="Terminal State.Report Associated Text" id="dP6-Qg-oWM">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleApplicationKeypad:" target="-1" id="gTF-zY-2mi"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="pFO-R4-QBV"/>
+                                        <menuItem title="字面控制字符" tag="17" identifier="Terminal State.Literal Mode" id="vdB-Qh-wxH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateToggleLiteralMode:" target="-1" id="vIj-Vm-M73"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="JGI-zr-cwU"/>
+                                        <menuItem title="仿真级别" id="uco-jF-Gq5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="仿真级别" id="VOZ-Xj-fTA">
+                                                <items>
+                                                    <menuItem title="VT100" tag="100" identifier="Terminal State.Emulation Level.VT100" id="Xze-0w-34U">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="terminalStateSetEmulationLevel:" target="-1" id="2KW-nW-gpn"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="VT200" tag="200" identifier="Terminal State.Emulation Level.VT200" id="Yat-BG-Cr5">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="terminalStateSetEmulationLevel:" target="-1" id="fKD-Gf-3K0"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="VT300" tag="300" identifier="Terminal State.Emulation Level.VT300" id="P4S-PI-zKU">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="terminalStateSetEmulationLevel:" target="-1" id="fke-dG-S4L"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="VT400" tag="400" identifier="Terminal State.Emulation Level.VT400" id="AfM-Tg-ZYT">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="terminalStateSetEmulationLevel:" target="-1" id="cxJ-Df-XhR"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="VT500" tag="500" identifier="Terminal State.Emulation Level.VT500" id="CLa-er-Pr0">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="terminalStateSetEmulationLevel:" target="-1" id="IHH-UN-FXK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Ub4-an-xKd"/>
+                                        <menuItem title="重置" identifier="Reset Terminal State" id="Hb6-C9-aDf" userLabel="Application Cursor Keys">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="terminalStateReset:" target="-1" id="kp5-e3-wFY"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="CRC-2n-duo"/>
+                            <menuItem title="隐藏会话" keyEquivalent="B" identifier="Bury Session" id="m8k-FC-JBb">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="bury:" target="-1" id="jki-EJ-MEs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="隐藏的会话" id="Weo-nd-iLL">
+                                <menu key="submenu" title="隐藏的会话" autoenablesItems="NO" id="PTu-aD-qbz"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="脚本" id="eAB-5s-fVh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="脚本" id="CZD-7u-bch">
+                        <items>
+                            <menuItem title="管理" id="Koa-MY-5QA">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="管理" id="PGw-xl-7oF">
+                                    <items>
+                                        <menuItem title="新建 Python 脚本" identifier="New Python Script" id="ds5-gY-cX0">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="newPythonScript:" target="201" id="v2b-iE-k7t"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="2O5-I1-S86"/>
+                                        <menuItem title="打开 Python REPL" identifier="Open Interactive Window" id="jXH-0I-Wtc">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openREPL:" target="201" id="1Pl-tK-Km1"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="iQa-T4-8Bh"/>
+                                        <menuItem title="管理依赖项…" identifier="Manage Dependencies" id="wHh-8e-oU2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openDependencyEditor:" target="201" id="4J6-lc-cWr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="安装 Python 运行时" identifier="Install Python Runtime" id="0D0-tt-wlA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="installPythonRuntime:" target="201" id="uxc-3n-hZc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="安装已下载的 Python 运行时" alternate="YES" identifier="Install Already-Downloaded Python Runtime" id="t3w-Wj-vG8">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="installAlreadyDownloadedPythonRuntime:" target="201" id="3fX-lc-mur"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="在访达中显示脚本" identifier="Reveal in Finder" id="eeH-ly-45H">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="revealScriptsInFinder:" target="201" id="2jN-7I-BfW"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="4hk-FZ-gFt"/>
+                                        <menuItem title="导入…" identifier="Import Script" id="hZE-iO-QIR">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="importScript:" target="201" id="eOl-HZ-58e"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="导出…" identifier="Export Script" id="dlj-rW-u7D">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportScript:" target="201" id="foG-lG-KnC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Rsa-x0-U18"/>
+                                        <menuItem title="控制台" keyEquivalent="j" identifier="Script Console" id="YqT-f8-W2j">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="openScriptConsole:" target="201" id="DYl-Yt-fdf"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" identifier="Separator" id="fcT-12-G86"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="配置文件" identifier=".Profiles" id="591">
+                    <menu key="submenu" title="配置文件" id="592">
+                        <items>
+                            <menuItem title="打开配置文件…" keyEquivalent="o" identifier="Open Profiles…" id="952">
+                                <connections>
+                                    <action selector="showBookmarkWindow:" target="201" id="953"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="868">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="按住 Option 键以新建窗口" identifier="Press Option for New Window" id="875"/>
+                            <menuItem title="在新窗口中打开" alternate="YES" identifier="Open In New Window" id="878">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="877">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                        </items>
+                        <accessibility identifier=".Profiles"/>
+                    </menu>
+                </menuItem>
+                <menuItem title="窗口" id="19">
+                    <menu key="submenu" title="窗口" systemMenu="window" id="24">
+                        <items>
+                            <menuItem title="最小化" keyEquivalent="m" identifier="Minimize" id="23">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="缩放" keyEquivalent="0" identifier="Zoom" id="882">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="883"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="24F-Ft-dce"/>
+                            <menuItem title="窗口布局" identifier="Arrangements" id="OBk-Hd-j3M">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="窗口布局" id="7ay-jv-hQe">
+                                    <items>
+                                        <menuItem title="保存窗口布局" keyEquivalent="S" identifier="Save Window Arrangement" id="1205">
+                                            <connections>
+                                                <action selector="saveWindowArrangement:" target="201" id="1206"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="将当前窗口保存为布局" alternate="YES" keyEquivalent="S" identifier="Save Current Window as Arrangement" id="D5Y-FD-IWK">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="saveCurrentWindowAsArrangement:" target="201" id="FAg-xE-xg0"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="eR0-U5-Xsf"/>
+                                        <menuItem title="从文件载入窗口布局…" identifier="Load Arrangement from File…" id="wNF-TH-Fz5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="importWindowArrangement:" target="201" id="2uC-bW-99w"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="恢复窗口布局" id="1280">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="恢复窗口布局" id="1281"/>
+                                        </menuItem>
+                                        <menuItem title="将窗口布局恢复为标签页" id="z6V-EJ-Ntf" userLabel="Restore Window Arrangement as Tabs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="将窗口布局恢复为标签页" id="fEX-7N-c8a"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="K2C-cn-9vm"/>
+                                        <menuItem title="在窗口布局中更改配置文件…" identifier="Change Profile in Arrangement…" id="58Y-0j-mff">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="changeProfileInArrangement:" target="-1" id="CKN-FY-1kR"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="8EB-Jn-Xxs"/>
+                            <menuItem title="编辑窗口标题" identifier="Edit Window Title" id="STe-pB-R3v">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="editWindowTitle:" target="-1" id="AQk-j6-utG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="yZw-O4-LQa"/>
+                            <menuItem title="标签页" id="Tel-UC-zi5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="标签页" id="cX5-Da-13x">
+                                    <items>
+                                        <menuItem title="编辑标签页标题" identifier="Edit Tab Title" id="o4x-qQ-aC9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="editTabTitle:" target="-1" id="tXR-UH-8S7"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="选择标签页" id="847">
+                                            <menu key="submenu" title="选择标签页" id="848">
+                                                <items>
+                                                    <menuItem title="选择下一个标签页" keyEquivalent="]" identifier="Select Next Tab" id="845">
+                                                        <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="nextTab:" target="-1" id="1188"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="选择上一个标签页" keyEquivalent="[" identifier="Select Previous Tab" id="843">
+                                                        <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="previousTab:" target="-1" id="1187"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="XR3-ga-Axh"/>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="移动标签页" id="1QV-xl-Oun">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="移动标签页" id="0pG-gd-cTc">
+                                                <items>
+                                                    <menuItem title="将标签页移到新窗口" identifier="Move Tab to New Window" id="1406">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="moveTabToNewWindow:" target="-1" id="Mk4-zW-mB4"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="1Tc-Uv-0ga"/>
+                                                    <menuItem title="向左移动标签页" keyEquivalent="[" identifier="Move Tab Left" id="Tf4-UH-zAS">
+                                                        <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="moveTabLeft:" target="-1" id="pqB-NX-qSz"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="向右移动标签页" keyEquivalent="]" identifier="Move Tab Right" id="1408">
+                                                        <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="moveTabRight:" target="-1" id="1411"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="拆分窗格" id="wXP-h9-8lp" userLabel="Split Pane">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="拆分窗格" id="Oek-Pf-HGt">
+                                    <items>
+                                        <menuItem title="选择分屏窗格" id="1209">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="选择分屏窗格" id="1210">
+                                                <items>
+                                                    <menuItem title="选择上方窗格" keyEquivalent="" identifier="Select Split Pane.Select Pane Above" id="1212">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="selectPaneUp:" target="-1" id="1227"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="选择下方窗格" keyEquivalent="" identifier="Select Split Pane.Select Pane Below" id="1213">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="selectPaneDown:" target="-1" id="1224"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="选择左侧窗格" keyEquivalent="" identifier="Select Split Pane.Select Pane Left" id="1214">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="selectPaneLeft:" target="-1" id="1225"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="选择右侧窗格" keyEquivalent="" identifier="Select Split Pane.Select Pane Right" id="1215">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="selectPaneRight:" target="-1" id="1226"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="1249"/>
+                                                    <menuItem title="下一个窗格" keyEquivalent="]" identifier="Select Split Pane.Next Pane" id="1250">
+                                                        <connections>
+                                                            <action selector="nextPane:" target="-1" id="1255"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="上一个窗格" keyEquivalent="[" identifier="Select Split Pane.Previous Pane" id="1251">
+                                                        <connections>
+                                                            <action selector="previousPane:" target="-1" id="1254"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="调整分屏窗格大小" id="R0v-Kn-z9m">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="调整分屏窗格大小" id="nnc-o3-t2j">
+                                                <items>
+                                                    <menuItem title="向上移动分隔条" keyEquivalent="" identifier="Resize Split Pane.Move Divider Up" id="2Jk-GR-zCt">
+                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="movePaneDividerUp:" target="-1" id="smA-wj-JIK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="向下移动分隔条" keyEquivalent="" identifier="Resize Split Pane.Move Divider Down" id="Qpv-Ie-1sh">
+                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="movePaneDividerDown:" target="-1" id="NVB-Pj-Xdg"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="向左移动分隔条" keyEquivalent="" identifier="Resize Split Pane.Move Divider Left" id="avG-JI-rjO">
+                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="movePaneDividerLeft:" target="-1" id="0Jq-7S-KVC"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="向右移动分隔条" keyEquivalent="" identifier="Resize Split Pane.Move Divider Right" id="t6w-8j-r4m">
+                                                        <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="movePaneDividerRight:" target="-1" id="0Bz-xh-KL2"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="锁定分屏宽度" identifier="Lock Split Pane Width" id="OsT-y6-DSn">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleLockSplitPaneWidth:" target="-1" id="QuG-FK-nTo"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="885">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="窗口样式" id="Va7-Bb-mhX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="窗口样式" id="9u2-er-NQu">
+                                    <items>
+                                        <menuItem title="正常" state="on" identifier="Window Style.Normal" id="2GY-cf-R3u">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="sRK-2W-In4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="cm0-u9-eJW"/>
+                                        <menuItem title="全屏" tag="1" identifier="Window Style.Full Screen" id="7YH-d7-iVT">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="cAM-6K-gHa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="已最大化" tag="15" identifier="Window Style.Maximized" id="yOg-Xf-9Ja">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="TUw-ln-UTt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="MSa-Cc-Jw0"/>
+                                        <menuItem title="无标题栏" tag="12" identifier="Window Style.No Title Bar" id="c9F-P9-dcr">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="GQA-tc-adb"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="xVP-RA-UyC"/>
+                                        <menuItem title="居中" tag="17" identifier="Window Style.Centered" id="5lc-iD-Td3">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="C6N-B8-fbV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="tC0-nP-ChJ"/>
+                                        <menuItem title="屏幕底部全宽" tag="5" identifier="Window Style.FullWidth Bottom of Screen" id="VcO-5C-gYt">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="AoZ-YA-7dw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕顶部全宽" tag="2" identifier="Window Style.FullWidth Top of Screen" id="xx4-Ao-jke">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="shN-Pz-FqQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕左侧全高" tag="6" identifier="Window Style..FullHeight Left of Screen" id="8Up-pV-Ad7">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="GTz-qr-LxZ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕右侧全高" tag="7" identifier="Window Style.FullHeight Right of Screen" id="Nbx-zl-DQO">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="jq8-Pr-NnW"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="blF-GQ-heM"/>
+                                        <menuItem title="屏幕底部" tag="8" identifier="Window Style.Bottom of Screen" id="GpQ-q3-0fg">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="NHP-PY-C6A"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕顶部" tag="9" identifier="Window Style.Top of Screen" id="K5f-FR-QxY">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="f2J-Yh-4Qa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕左侧" tag="10" identifier="Window Style.Left of Screen" id="5VM-vY-8EI">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="Meg-Ft-YBN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="屏幕右侧" tag="11" identifier="Window Style.Right of Screen" id="Xma-aq-b5U">
+                                            <connections>
+                                                <action selector="setWindowStyle:" target="-1" id="q3g-dB-W5d"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="XJx-vd-H4Y">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="排列窗口" id="tt8-Pq-lBv">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="排列窗口" id="MD6-rO-AU0">
+                                    <items>
+                                        <menuItem title="合并所有窗口" identifier="Merge All Windows" id="Kb8-2V-7Gg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mergeAllWindows:" target="-1" id="Xzh-bw-9Mo"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="7sO-I5-Tdu">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="水平排列窗口" identifier="Arrange Windows Horizontally" id="1178">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="arrangeHorizontally:" target="201" id="1179"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="均匀排列分屏" identifier="Arrange Split Panes Evenly" id="xtk-nu-uNt">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="arrangeSplitPanesEvenly:" target="201" id="eE4-2D-fTq"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="调整窗口大小" id="X81-5E-VA5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="调整窗口大小" id="H9L-Zb-0Lb">
+                                    <items>
+                                        <menuItem title="减小高度" keyEquivalent="" identifier="Resize Window.Decrease Height" id="E89-Mw-yOH">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="decreaseHeight:" target="-1" id="oaS-2d-4rw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="增加高度" keyEquivalent="" identifier="Resize Window.Increase Height" id="1L5-Nc-laa">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="increaseHeight:" target="-1" id="wNK-4C-WtN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="减小宽度" identifier="Resize Window.Decrease Width" id="XkO-DN-h6r">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="decreaseWidth:" target="-1" id="B9A-Em-6qf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="增加宽度" identifier="Resize Window.Increase Width" id="ql8-uk-qRc">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="increaseWidth:" target="-1" id="XyN-u0-ljE"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1190"/>
+                            <menuItem title="密码管理器" keyEquivalent="f" identifier="Password Manager" id="5">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openPasswordManager:" target="-1" id="tkA-Pd-uSe"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="人工智能对话" keyEquivalent="Y" identifier="AI Chats" id="okQ-cw-xCt">
+                                <connections>
+                                    <action selector="openAIChats:" target="201" id="Xdw-Tb-nB2"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zl8-Q7-4RO">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="固定快捷键窗口" keyEquivalent="-" identifier="Pin Hotkey Window" id="Kd2-6A-mAn">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="togglePinHotkeyWindow:" target="201" id="lqK-e4-zQn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="tbC-nC-pds">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="全部移到前面" identifier="Bring All To Front" id="f7R-Y0-F8w">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="DIN-7V-f31"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="帮助" id="103">
+                    <menu key="submenu" title="帮助" id="106">
+                        <items>
+                            <menuItem title="iTerm2 帮助" keyEquivalent="?" identifier="iTerm2 Help" id="111">
+                                <connections>
+                                    <action selector="showHelp:" target="201" id="hFO-6H-VeJ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="复制模式快捷键" identifier="Copy Mode Shortcuts" id="wTB-km-9Qm">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="copyModeShortcuts:" target="-1" id="fOs-EL-nnE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="bmQ-Hv-xgs"/>
+                            <menuItem title="开源许可证" identifier="Open Source Licenses" id="dV2-dF-UB1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openSourceLicenses:" target="201" id="kij-nS-KMI"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="bgo-A0-EFK"/>
+                            <menuItem title="GPU 渲染器可用性" identifier="GPU Renderer Availability" id="16n-FV-p0f">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="gpuRendererAvailability:" target="-1" id="Z2a-Sj-1Vf"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="139" y="154"/>
+        </menu>
+        <customObject id="201" userLabel="iTermApplicationDelegate" customClass="iTermApplicationDelegate">
+            <connections>
+                <outlet property="_archivesMenuItem" destination="fb0-0W-qYG" id="Vfm-kg-kma"/>
+                <outlet property="_buriedSessions" destination="PTu-aD-qbz" id="Fl9-Gn-jv2"/>
+                <outlet property="_captureGPUFrameMenuItem" destination="8KO-hG-xdC" id="boz-fC-4l8"/>
+                <outlet property="_composerMenuItem" destination="Bhs-45-5yR" id="Od6-HK-qOR"/>
+                <outlet property="_enterFullScreenMenuItem" destination="914" id="pbn-Hb-GK3"/>
+                <outlet property="_installPythonRuntime" destination="0D0-tt-wlA" id="nad-Fp-mh8"/>
+                <outlet property="_iterm2Menu" destination="57" id="xrG-8D-NNQ"/>
+                <outlet property="_namedMarksMenuItem" destination="bWZ-Rb-J4D" id="M8H-RD-WYb"/>
+                <outlet property="_removeRecentProfilesFromDockMenuItem" destination="WcV-7l-ycc" id="Fyb-Mv-FK0"/>
+                <outlet property="_scriptsMenu" destination="CZD-7u-bch" id="2Q5-aI-74T"/>
+                <outlet property="_showTipOfTheDay" destination="ft3-BP-igZ" id="WZt-qp-iuC"/>
+                <outlet property="_splitHorizontally" destination="1289" id="Arv-ON-Put"/>
+                <outlet property="_splitHorizontallyWithCurrentProfile" destination="1201" id="FLl-hN-paX"/>
+                <outlet property="_splitVertically" destination="1291" id="HKF-80-dqT"/>
+                <outlet property="_splitVerticallyWithCurrentProfile" destination="1200" id="TXu-qW-aIJ"/>
+                <outlet property="_toolbeltMenuItem" destination="1297" id="QkM-ZJ-lT3"/>
+                <outlet property="_triggers" destination="DB9-tf-hPg" id="gAA-pF-wPx"/>
+                <outlet property="_webMenuItem" destination="Dn5-OV-QtF" id="pmG-vt-lNW"/>
+                <outlet property="bookmarkMenu" destination="592" id="874"/>
+                <outlet property="irPrev" destination="976" id="980"/>
+                <outlet property="maximizePane" destination="1233" id="1237"/>
+                <outlet property="selectTab" destination="847" id="863"/>
+                <outlet property="showFullScreenTabs" destination="1257" id="1260"/>
+                <outlet property="suUpdater" destination="879" id="FRj-mW-Vma"/>
+                <outlet property="toolbeltMenu" destination="1296" id="1299"/>
+                <outlet property="useTransparency" destination="1228" id="1230"/>
+                <outlet property="windowArrangementsAsTabs_" destination="z6V-EJ-Ntf" id="wse-Wc-WVw"/>
+                <outlet property="windowArrangements_" destination="1280" id="1285"/>
+            </connections>
+        </customObject>
+        <customObject id="266" userLabel="Font Manager" customClass="NSFontManager"/>
+        <customObject id="879" userLabel="SUUpdater" customClass="SUUpdater"/>
+        <customObject id="vNk-ru-3oN" userLabel="Snippets Menu Controller" customClass="iTermSnippetsMenuController">
+            <connections>
+                <outlet property="_menuItem" destination="s0f-jP-7Pk" id="Yh8-jB-GRV"/>
+            </connections>
+        </customObject>
+        <customObject id="EJt-fO-K8I" userLabel="Actions Menu Controller" customClass="iTermActionsMenuController">
+            <connections>
+                <outlet property="_menu" destination="8Ja-GB-Waf" id="a0G-8e-2dj"/>
+            </connections>
+        </customObject>
+        <menuItem title="替换为格式化 JSON" id="vvf-qA-Pf7">
+            <modifierMask key="keyEquivalentModifierMask"/>
+            <connections>
+                <action selector="replaceSelectionWithPrettyPrintedJSON:" target="-1" id="WCB-eW-ma7"/>
+            </connections>
+        </menuItem>
+        <menuItem title="项目" id="7NG-s1-th2">
+            <modifierMask key="keyEquivalentModifierMask"/>
+        </menuItem>
+        <menuItem title="网页" identifier="Web" id="Dn5-OV-QtF">
+            <modifierMask key="keyEquivalentModifierMask"/>
+            <menu key="submenu" title="网页" id="xDC-cp-ZMt">
+                <items>
+                    <menuItem title="打开位置…" keyEquivalent="l" id="1jY-S7-DWS">
+                        <connections>
+                            <action selector="browserOpenLocation:" target="-1" id="V5p-pF-of0"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="zEv-7q-xMR"/>
+                    <menuItem title="后退" keyEquivalent="[" id="WKv-50-M5a">
+                        <connections>
+                            <action selector="browserBack:" target="-1" id="zYG-rd-RSi"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="前进" keyEquivalent="]" id="Osn-cN-dXN">
+                        <connections>
+                            <action selector="browserForward:" target="-1" id="6WV-XI-3KY"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="OHv-d7-unG"/>
+                    <menuItem title="重新载入页面" keyEquivalent="r" id="hJc-IO-faA">
+                        <connections>
+                            <action selector="browserReload:" target="-1" id="s7j-3A-Eu6"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="历史记录" keyEquivalent="y" id="uSW-pP-LFB">
+                        <connections>
+                            <action selector="browserHistory:" target="-1" id="3HV-iw-snb"/>
+                        </connections>
+                    </menuItem>
+                </items>
+            </menu>
+        </menuItem>
+    </objects>
+</document>
